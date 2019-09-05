@@ -3,7 +3,7 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-image: linear-gradient(red , magenta);
+  background-color: darkblue; 
   font-family: "proxima-nova", "Source Sans Pro", sans-serif;
   font-size: 1em;
   letter-spacing: 0.1px;
@@ -16,7 +16,7 @@ body {
 #frame {
   width: 100vw;
   min-width: 360px;
-  max-width: 1500px;
+  max-width: 1365px;
   height: 100vh;
   min-height: 300px;
   max-height: 720px;
@@ -303,7 +303,7 @@ body {
 #frame #sidepanel #search input {
   font-family: "proxima-nova",  "Source Sans Pro", sans-serif;
   padding: 10px 0 10px 46px;
-  width: calc(100% - 0px);
+  width: calc(100%);
   border: none;
   background: #32465a;
   color: #f5f5f5;
