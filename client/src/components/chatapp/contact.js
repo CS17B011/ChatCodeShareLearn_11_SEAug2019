@@ -2,9 +2,6 @@ import React,{Component} from 'react';
 import './chatapp.css';
 
 export default class contact extends Component {
-	componentDidMount() {
-		console.log(this.props.roll);
-	}
 
 	render() {
 		return (

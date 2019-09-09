@@ -1,15 +1,14 @@
 import React,{Component} from 'react';
 import SidePanel from './sidepanel'; 
 import Messages from './messages';
-import Message_input from './message_input';
-import Content from './content';
+import MessageInput from './message_input';
 import './chatapp.css';
 
 export default class chatapp extends Component {
 	render() {
 		return (
 			<div id="frame">
-	        	<SidePanel Name="ABCD"/>
+	        	<SidePanel/>
 		        <div className="content">
 		           	<div className="contact-profile">
 		            	<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
@@ -21,7 +20,7 @@ export default class chatapp extends Component {
 		              	</div>
 		            </div>
 	           		<Messages />
-	            	<Message_input />
+	            	<MessageInput />
     	        </div>
 	        </div>
 		)

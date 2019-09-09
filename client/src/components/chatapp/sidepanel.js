@@ -4,10 +4,6 @@ import Contacts from './contacts';
 
 export default class sidepanel extends Component {
 
-	componentDidMount() {
-		console.log(this.props.Name);
-	}
-
 	render() {
 		return (
 			<div id="sidepanel">
@@ -38,7 +34,7 @@ export default class sidepanel extends Component {
 	              <label><i className="fa fa-search" aria-hidden="true" /></label>
 	              <input type="text" placeholder="Search contacts..." />
 	            </div>
-	            <Contacts roll="cs17b006" />
+	            <Contacts />
 	            <div id="bottom-bar">
 	              <button id="addcontact"><i className="fa fa-user-plus fa-fw" aria-hidden="true" /> <span>Add contact</span></button>
 	              <button id="settings"><i className="fa fa-cog fa-fw" aria-hidden="true" /> <span>Settings</span></button>
