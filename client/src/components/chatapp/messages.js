@@ -1,8 +1,8 @@
-import React,{Component} from 'react';
+import React from 'react';
 import './chatapp.css';
 import Message from './message';
 
-export default class Messages extends Component {
+export default class Messages extends React.Component {
 	render() {
 		return (
           <div className="messages">

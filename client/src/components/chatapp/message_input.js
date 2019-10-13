@@ -1,6 +1,6 @@
-import React,{Component} from 'react';
+import React from 'react';
 
-export default class MessageInput extends Component {
+export default class MessageInput extends React.Component {
 
 	state = {
 		msg : ""

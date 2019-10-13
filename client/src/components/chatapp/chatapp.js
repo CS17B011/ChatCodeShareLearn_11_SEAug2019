@@ -1,10 +1,10 @@
-import React,{Component} from 'react';
+import React from 'react';
 import SidePanel from './sidepanel'; 
 import Messages from './messages';
 import MessageInput from './message_input';
 import './chatapp.css';
 
-export default class ChatApp extends Component {
+export default class ChatApp extends React.Component {
 	render() {
 		return (
 			<div id="frame">

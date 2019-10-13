@@ -1,8 +1,8 @@
-import React,{Component} from 'react';
+import React from 'react';
 import './chatapp.css';
 import Contact from './contact'
 
-export default class Contacts extends Component {
+export default class Contacts extends React.Component {
 	render() {
 		return (
 			<div id="contacts">
