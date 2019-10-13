@@ -1,13 +1,9 @@
 import React,{Component} from 'react';
-import io from 'socket.io-client';
 
-export class message_input extends Component {
-	
-	socketUrl = "http://localhost:4000";
+export default class MessageInput extends Component {
 
 	state = {
-		msg : "",
-		socket : null
+		msg : ""
 	}
 
 	submitHandler = (e) => {
@@ -22,19 +18,6 @@ export class message_input extends Component {
 		});
 	}
 
-	initSocket = () => {
-		const socket = io(this.socketUrl, {
-			transports: ['websocket', 'polling', 'flashsocket']
-		});
-		socket.on('connect',() =>{
-			console.log("Connected...");
-		});
-	}
-
-	componentDidMount() {
-		this.initSocket();
-	}
-
 	render() {
 		return (
 				<div className="message-input">
@@ -47,8 +30,6 @@ export class message_input extends Component {
 	            	</div>
 	            </div>
 				
-		)
+		);
 	}
 }
-
-export default message_input

@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import './chatapp.css';
 
-export class message extends Component {
+export default class Message extends Component {
 	render() {
 		return (
 			<div>
@@ -13,5 +13,3 @@ export class message extends Component {
 		)
 	}
 }
-
-export default message
