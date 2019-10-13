@@ -1,13 +1,14 @@
-import React from 'react';
-import ChatApp from './components/chatapp/chatapp';
+import React, { Component } from 'react';
+import ChatApp from './Components/ChatApp';
 
-
-export default class App extends React.Component {
-  render() {
-    return (
-      <div>
-      	<ChatApp />
-      </div>
-    );
-  }
+class App extends Component {
+    render() {
+        return (
+            <div>
+                <ChatApp/>
+            </div>
+        );
+    }
 }
+
+export default App;

@@ -1,14 +1,15 @@
-import React from 'react';
-import SidePanel from './sidepanel'; 
-import Messages from './messages';
-import MessageInput from './message_input';
-import './chatapp.css';
+import React, { Component } from 'react';
+import SidePanel from './SidePanel';
+import Messages from './Messages';
+import MessageInput from './MessageInput';
+import './ChatApp.css';
 
-export default class ChatApp extends React.Component {
-	render() {
-		return (
-			<div id="frame">
-	        	<SidePanel/>
+class ChatApp extends Component {
+
+    render() {
+        return (
+            <div id="frame">
+                <SidePanel/>
 		        <div className="content">
 		           	<div className="contact-profile">
 		            	<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
@@ -19,10 +20,12 @@ export default class ChatApp extends React.Component {
 			                <i className="fa fa-google" aria-hidden="true" />
 		              	</div>
 		            </div>
-	           		<Messages />
-	            	<MessageInput />
+                    <Messages/>
+                    <MessageInput/>
     	        </div>
 	        </div>
-		);
-	}
+        );
+    }
 }
+
+export default ChatApp;
