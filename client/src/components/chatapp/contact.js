@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import './chatapp.css';
 
-export default class contact extends Component {
+export default class Contact extends Component {
 
 	render() {
 		return (

@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import './chatapp.css';
 import Contacts from './contacts';
 
-export default class sidepanel extends Component {
+export default class SidePanel extends Component {
 
 	render() {
 		return (

@@ -4,7 +4,7 @@ import Messages from './messages';
 import MessageInput from './message_input';
 import './chatapp.css';
 
-export default class chatapp extends Component {
+export default class ChatApp extends Component {
 	render() {
 		return (
 			<div id="frame">
@@ -23,6 +23,6 @@ export default class chatapp extends Component {
 	            	<MessageInput />
     	        </div>
 	        </div>
-		)
+		);
 	}
 }

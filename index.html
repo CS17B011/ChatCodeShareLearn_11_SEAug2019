@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chat Application</title>
+</head>
+<script src="/socket.io/socket.io.js"/></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style type="text/css">
+	body{
+		margin-top: 50px;
+	}
+	#messageWindow{
+		display: none;
+	}
+	#chat{
+		height: 450px;
+		overflow: auto;
+	}
+	#chatitem{
+		overflow: auto;
+	}
+</style>
+<body>
+	<div class="container">
+		<div class="row" id="userWindow">
+			<div class="col-md-12">
+				<form id="uForm">
+					<div class="form-group">
+						<label>Enter User Name:</label>
+						<input class="form-control" id="uname"></textarea>
+						<br>
+						<input type="submit" class="btn btn-lg btn-primary" value="Login">
+					</div>
+				</form>
+			</div>			
+		</div>
+		<div class="row" id="goauth">
+			<div class="col-md-12">
+				<a href="/auth/google" class="btn-lg btn-danger"><span class="fa fa-google-plus"></span>Google</a>
+			</div>
+		</div>
+		<div class="row" id="messageWindow">
+			<div class="col-md-4">
+				<div class="well">
+				<h3>Online Users</h3>
+				<ul class="list-group" id="users">					
+				</ul>
+				</div>
+			</div>
+			<div class="col-md-8">
+				<div class="chat" id="chat">
+				</div>
+				<form id="mForm">
+						<div class="form-group">
+							<label>Enter Message...</label>
+							<textarea class="form-control" id="message"></textarea>
+							<br>
+							<input type="submit" class="btn btn-lg btn-primary" value="Send Message">
+						</div>
+					</form>
+			</div>			
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function(){
+			var socket = io.connect();
+			var $users = $('#users'); 
+			var $mForm = $('#mForm');
+			var $message = $('#message');
+			var $chat = $('#chat');
+			var $messageWindow = $('#messageWindow');
+			var $userWindow = $('#userWindow');
+			var $uForm = $('#uForm');
+			var $uname = $('#uname');
+
+			$message.keydown((e) => {
+				if(e.which==13)
+				{
+					e.preventDefault();
+					if(e.shiftKey)
+						$message.val($message.val()+'\n');
+					else
+						$mForm.submit();
+				}
+			});
+
+			$mForm.submit((e) => {
+				e.preventDefault();
+				if($message.val())
+					socket.emit('sm',$message.val());
+				$message.val('');
+			});
+
+			socket.on('nm',(data) => {
+				$chat.append('<div class="well" id="chatitem"><strong>'+data.user+': </strong>'+data.msg+'</div>');
+			});
+
+			$uForm.submit((e) => {
+				e.preventDefault();
+				if(!$uname.val())
+				{
+					alert("Enter UserName");
+					return false;
+				}
+				socket.emit('newUser',$uname.val(), (data) => {
+					if(data)
+					{
+						$userWindow.hide();
+						$messageWindow.show();
+					}
+				});
+			});
+
+			socket.on('getUsers', (data) => {
+				list = ''
+				for(i=0;i<data.length;i++)
+				{
+					if(data[i]==$uname.val())
+						list+='<li class="list-group-item" id="chatitem"><strong>'+data[i]+'</strong></li>';
+					else
+						list+='<li class="list-group-item" id="chatitem">'+data[i]+'</li>';
+				}
+				$users.html(list);
+			});
+		});
+	</script>
+</body>
+</html>
