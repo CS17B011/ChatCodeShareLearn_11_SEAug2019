@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router';
 
 class MessageInput extends Component {
     
@@ -7,6 +8,13 @@ class MessageInput extends Component {
         this.state = {
             msg: ""
         }
+    }
+
+    onClickHandler = (e) => {
+        console.log("Handler");
+        e.preventDefault();
+        console.log("Redireccting...");
+        window.open('/editor');
     }
 
     changeHandler = (e) => {
@@ -27,6 +35,7 @@ class MessageInput extends Component {
                     <input type="text" className="message" placeholder="Write your message..." value={this.state.msg} onChange={this.changeHandler}/>
                     <i className="fa fa-paperclip attachment" aria-hidden="true" />
                     <button className="submit" onSubmit={this.submitHandler}><i className="fa fa-paper-plane" aria-hidden="true" /></button>
+                    <button className="editor"><i className="fa fa-edit" aria-hidden="true" onClick = {this.onClickHandler}/></button>
                 </form>
                 </div>
             </div>
