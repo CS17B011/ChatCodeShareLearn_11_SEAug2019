@@ -7,7 +7,7 @@ import io from 'socket.io-client';
 
 class ChatApp extends Component {
 
-	socket = io('http://localhost:4000');
+	socket = io('http://10.21.127.237:4000');
 
 	constructor(props){
 		super(props);
