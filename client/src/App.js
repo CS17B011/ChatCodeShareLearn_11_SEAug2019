@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ChatApp from './Components/ChatApp/ChatApp';
 import Editor from './Components/Editor/Editor';
+import Login from './Components/Login/Login'
 import {
 	BrowserRouter as Router,
 	Route,
@@ -15,6 +16,9 @@ class App extends Component {
                 <Editor/>
             </Route>
             <Route exact path="/">
+                <Login/>
+            </Route>
+            <Route exact path="/chatapp">
                 <ChatApp/>
             </Route>
             </Router>
