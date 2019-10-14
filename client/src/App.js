@@ -11,12 +11,14 @@ class App extends Component {
     render() {
         return (
             <Router>
-            <Route exact path="/editor">
-                <Editor/>
-            </Route>
+            
             <Route exact path="/">
                 <ChatApp/>
             </Route>
+            <Route exact path="/editor">
+                <Editor/>
+            </Route>
+            
             </Router>
         );
     }

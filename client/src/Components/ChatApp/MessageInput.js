@@ -11,9 +11,7 @@ class MessageInput extends Component {
     }
 
     onClickHandler = (e) => {
-        console.log("Handler");
         e.preventDefault();
-        console.log("Redireccting...");
         window.open('/editor');
     }
 

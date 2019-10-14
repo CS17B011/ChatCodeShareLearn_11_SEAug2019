@@ -4,6 +4,8 @@ import Pusher from 'pusher-js';
 import pushid from 'pushid';
 import axios from 'axios'
 
+import './Editor.css';
+
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 
@@ -17,8 +19,6 @@ export default class Editor extends Component {
         this.state = {
           id: '',
           html: '',
-          css: '',
-          js: '',
         };
       }
 
@@ -60,7 +60,7 @@ export default class Editor extends Component {
       };
 
       render() {
-        const { html, js } = this.state;
+        const { html } = this.state;
         const codeMirrorOptions = {
           theme: 'material',
           lineNumbers: true,
@@ -84,26 +84,12 @@ export default class Editor extends Component {
                   }}
                 />
               </div>
-              
-              <div className="code-editor js-code">
-                <div className="editor-header">JavaScript</div>
-                <CodeMirror
-                  value={js}
-                  options={{
-                    mode: 'javascript',
-                    ...codeMirrorOptions,
-                  }}
-                  onBeforeChange={(editor, data, js) => {
-                    this.setState({ js });
-                  }}
-                />
-              </div>
             </section>
-            {/*
+            /*{
             <section className="result">
               <iframe title="result" className="iframe" ref="iframe" />
             </section>
-        */}
+        }*/
           </div>
         );
       }
