@@ -3,7 +3,7 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-color: darkblue; 
+    background-color: grey; 
     font-family: "proxima-nova", "Source Sans Pro", sans-serif;
     font-size: 1em;
     letter-spacing: 0.1px;
@@ -629,9 +629,10 @@ body {
   #frame .content .message-input .wrap input:focus {
     outline: none;
   }
+
   #frame .content .message-input .wrap .attachment {
     position: absolute;
-    right: 60px;
+    right: 110px;
     z-index: 4;
     margin-top: 10px;
     font-size: 1.1em;
@@ -651,8 +652,8 @@ body {
   #frame .content .message-input .wrap button {
     float: right;
     border: none;
-    width: 50px;
-    padding: 12px 0;
+    width: 45px;
+    padding: 11px 0;
     cursor: pointer;
     background: #32465a;
     color: #f5f5f5;
