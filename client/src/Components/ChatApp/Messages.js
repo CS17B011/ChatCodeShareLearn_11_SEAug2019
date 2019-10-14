@@ -10,7 +10,7 @@ class Messages extends Component {
                     {
                         this.props.msgs.map( (msg,index) => (
                         <li className={msg.cls} key={index}>
-                            <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
+                            <img src="https://picsum.photos/300" alt="" />
                             <p>{msg.val}</p>
                         </li>
                     ))}
