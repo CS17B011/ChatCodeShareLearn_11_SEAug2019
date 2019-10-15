@@ -53,10 +53,13 @@ io.on(CONNECTION, (socket) => {
   socket.on(DISCONNECT,() => {
 		connections.splice(connections.indexOf(socket.id),1);
     console.log('Disconnected... : %s remaining.', connections.length);
+    console.log(socket.emailid);
+    users = users.filter(user => user.emailid!=socket.emailid);
+    updateContacts();
   });
   
-  socket.on(NEW_MESSAGE,(data,username) => {
-    io.sockets.emit(SEND_MESSAGE,{data,username});
+  socket.on(NEW_MESSAGE,data => {
+    io.sockets.emit(SEND_MESSAGE,data);
   });
 
   socket.on(NEW_USER,(data,callback) => {
@@ -64,7 +67,7 @@ io.on(CONNECTION, (socket) => {
       callback(false);
     }
     else{
-      socket.username = data[0];
+      socket.emailid = data[1];
       users.push({
         username: data[0],
         emailid: data[1]

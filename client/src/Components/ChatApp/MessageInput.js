@@ -15,7 +15,7 @@ class MessageInput extends Component {
     
     submitHandler = (e) => {
         e.preventDefault();
-        this.props.submit(this.state.msg,"replies");
+        this.props.submit(this.state.msg);
         this.setState({msg:""});
     }
 
