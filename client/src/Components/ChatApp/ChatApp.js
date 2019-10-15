@@ -9,9 +9,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 class ChatApp extends Component {
-
 	socket = io('http://localhost:4000');
-
 	constructor(props){
 		super(props);
 		this.state = {
