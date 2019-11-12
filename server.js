@@ -1,10 +1,9 @@
 require('dotenv/config')
 const express = require('express');
 const app = express();
-const socketio = require('socket.io');
 const http = require('http');
 const server = http.createServer(app);
-const io = socketio(server);
+const io = require('socket.io')(server, { origins: '*:*'});
 const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
