@@ -1,96 +1,69 @@
 import React, { Component } from 'react';
-import { Controlled as CodeMirror } from 'react-codemirror2';
-import Pusher from 'pusher-js';
-import pushid from 'pushid';
-import axios from 'axios'
+import { Controlled as Codemirror } from 'react-codemirror2';
 
 import './Editor.css';
 
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 
-import 'codemirror/mode/htmlmixed/htmlmixed';
-import 'codemirror/mode/css/css';
+import 'codemirror/mode/markdown/markdown';
+import 'codemirror/mode/xml/xml';
 import 'codemirror/mode/javascript/javascript';
 
+var defaults = {
+  markdown: '# Heading\n\nSome **bold** and _italic_ text\nBy [Jed Watson](https://github.com/JedWatson)',
+  javascript: 'var component = {\n\tname: "react-codemirror",\n\tauthor: "Jed Watson",\n\trepo: "https://github.com/JedWatson/react-codemirror"\n};'
+};
+
 export default class Editor extends Component {
-    constructor() {
+  
+  constructor() {
         super();
         this.state = {
-          id: '',
-          html: '',
+          code: defaults.markdown,
+          readOnly: false,
+          mode: 'markdown',
         };
       }
 
-      componentDidUpdate() {
-        this.runCode();
-      }
+  updateCode (newCode) {
+    this.setState({
+      code: newCode
+    });
+  }
 
-      componentDidMount() {
-        this.setState({
-          id: pushid(),
-        });
-      }
+  changeMode (e) {
+    var mode = e.target.value;
+    this.setState({
+      mode: mode,
+      code: defaults[mode]
+    });
+  }
 
-      runCode = () => {
-        /*const { html, js } = this.state;
+  toggleReadOnly () {
+    this.setState({
+      readOnly: !this.state.readOnly
+    }, () => this.refs.editor.focus());
+  }
 
-        const iframe = this.refs.iframe;
-        const document = iframe.contentDocument;
-        const documentContents = `
-          <!DOCTYPE html>
-          <html lang="en">
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <meta http-equiv="X-UA-Compatible" content="ie=edge">
-            <title>Document</title>
-          </head>
-          <body>
-            ${html}
-            <script type="text/javascript">
-              ${js}
-            </script>
-          </body>
-          </html>
-        `;
-        document.open();
-        document.write(documentContents);
-        document.close();*/
-      };
+  render () {
+    var options = {
+      lineNumbers: true,
+      readOnly: this.state.readOnly,
+      mode: this.state.mode
+    };
+    return (
+      <div>
+        <Codemirror ref="editor" value={this.state.code} onChange={this.updateCode} options={options} autoFocus={true} />
+        <div style={{ marginTop: 10 }}>
+          <select onChange={this.changeMode} value={this.state.mode}>
+            <option value="markdown">Markdown</option>
+            <option value="javascript">JavaScript</option>
+          </select>
+          <button onClick={this.toggleReadOnly}>Toggle read-only mode (currently {this.state.readOnly ? 'on' : 'off'})</button>
+        </div>
+      </div>
+    );
+  }
+};
 
-      render() {
-        const { html } = this.state;
-        const codeMirrorOptions = {
-          theme: 'material',
-          lineNumbers: true,
-          scrollbarStyle: null,
-          lineWrapping: true,
-        };
-
-        return (
-          <div className="App">
-            <section className="playground">
-              <div className="code-editor html-code">
-                <div className="editor-header">HTML</div>
-                <CodeMirror
-                  value={html}
-                  options={{
-                    mode: 'htmlmixed',
-                    ...codeMirrorOptions,
-                  }}
-                  onBeforeChange={(editor, data, html) => {
-                    this.setState({ html });
-                  }}
-                />
-              </div>
-            </section>
-            /*{
-            <section className="result">
-              <iframe title="result" className="iframe" ref="iframe" />
-            </section>
-        }*/
-          </div>
-        );
-      }
-    }
