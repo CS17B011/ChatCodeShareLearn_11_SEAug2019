@@ -7,12 +7,13 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 
 import 'codemirror/mode/markdown/markdown';
-import 'codemirror/mode/xml/xml';
+import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/mode/javascript/javascript';
 
 var defaults = {
-  markdown: '# Heading\n\nSome **bold** and _italic_ text\nBy [Jed Watson](https://github.com/JedWatson)',
-  javascript: 'var component = {\n\tname: "react-codemirror",\n\tauthor: "Jed Watson",\n\trepo: "https://github.com/JedWatson/react-codemirror"\n};'
+  markdown: '',
+  javascript: '',
+  htmlmixed: ''
 };
 
 export default class Editor extends Component {
@@ -26,21 +27,16 @@ export default class Editor extends Component {
         };
       }
 
-  updateCode (newCode) {
-    this.setState({
-      code: newCode
-    });
-  }
-
-  changeMode (e) {
+  changeMode = (e) => {
+    e.preventDefault();
     var mode = e.target.value;
     this.setState({
       mode: mode,
-      code: defaults[mode]
+      code: defaults[mode]+this.state.code
     });
   }
 
-  toggleReadOnly () {
+  toggleReadOnly = (e) => {
     this.setState({
       readOnly: !this.state.readOnly
     }, () => this.refs.editor.focus());
@@ -54,11 +50,20 @@ export default class Editor extends Component {
     };
     return (
       <div>
-        <Codemirror ref="editor" value={this.state.code} onChange={this.updateCode} options={options} autoFocus={true} />
+        
+        <Codemirror
+                  value={this.state.code}
+                  options = {{mode: this.state.mode}}
+                  onBeforeChange={(editor, data, code) => {
+                    this.setState({ code  : code + data.text[0] });
+                  }}
+                />
+        
         <div style={{ marginTop: 10 }}>
           <select onChange={this.changeMode} value={this.state.mode}>
             <option value="markdown">Markdown</option>
             <option value="javascript">JavaScript</option>
+            <option value="htmlmixed">htmlmixed</option>
           </select>
           <button onClick={this.toggleReadOnly}>Toggle read-only mode (currently {this.state.readOnly ? 'on' : 'off'})</button>
         </div>
@@ -67,3 +72,4 @@ export default class Editor extends Component {
   }
 };
 
+  
