@@ -4,7 +4,7 @@ import Messages from './Messages';
 import MessageInput from './MessageInput';
 import './ChatApp.css';
 import io from 'socket.io-client';
-import {NEW_MESSAGE,SEND_MESSAGE,NEW_USER,UPDATE_USERS} from '../chatservice/events';
+import {NEW_MESSAGE,SEND_MESSAGE,NEW_USER,UPDATE_USERS,SEND_CODE} from '../chatservice/events';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
@@ -89,6 +89,16 @@ class ChatApp extends Component {
 			if(this.socket.id!==data.id){
 				var newMessage = {
 					cls:"sent",
+					val:data.val
+				};
+				this.setState({msgs:[...this.state.msgs,newMessage]});
+			}
+		});
+		this.socket.on(SEND_CODE,(data) => {
+			console.log(data);
+			if(this.props.codeID!==data.id){
+				var newMessage = {
+					cls:"replies",
 					val:data.val
 				};
 				this.setState({msgs:[...this.state.msgs,newMessage]});

@@ -6,10 +6,12 @@ const chatServices = {
     TYPING:'typing in fontend',
     STOP_TYPING:'typing stopped in frontend',
     NEW_USER:'register new user',
-    UPDATE_USERS:'Updating Online User'
+    UPDATE_USERS:'Updating Online User',
+    NEW_CODE: 'Code From client to server',
+    SEND_CODE: 'Code From server to client'
   }
   
-  var {NEW_MESSAGE,SEND_MESSAGE,CONNECTION,DISCONNECT,TYPING,STOP_TYPING,NEW_USER,UPDATE_USERS} = chatServices;
+  var {NEW_MESSAGE,SEND_MESSAGE,CONNECTION,DISCONNECT,TYPING,STOP_TYPING,NEW_USER,UPDATE_USERS,NEW_CODE,SEND_CODE} = chatServices;
   
   connections = [];
   users = [];
@@ -33,6 +35,10 @@ const chatServices = {
 
     socket.on(NEW_MESSAGE,data => {
         io.sockets.emit(SEND_MESSAGE,data);
+    });
+
+    socket.on(NEW_CODE,data => {
+        io.sockets.emit(SEND_CODE,data);
     });
 
     socket.on(NEW_USER,(data,callback) => {
