@@ -9,28 +9,28 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 class ChatApp extends Component {
-
 	socket = io('http://localhost:4000');
-
 	constructor(props){
 		super(props);
 		this.state = {
+			username: "",
 			msgs: [],
 			contacts: []
 		};
 	}
 
-	addMsg = (val,cls) => {
+	addMsg = (val) => {
 		if(val)
 		{
 			console.log(this.socket);
+			var msg = this.state.username + ' : ' + val;
 			var data = {
-				cls,
-				val,
+				cls:"replies",
+				val:msg,
 				id: this.socket.id
 			};
 			this.setState({msgs: [...this.state.msgs,data]});
-			this.socket.emit(NEW_MESSAGE,{data,username: this.socket.username});
+			this.socket.emit(NEW_MESSAGE,data);
 		}
 	};
 
@@ -59,6 +59,7 @@ class ChatApp extends Component {
 			if(result.value){
 				this.socket.emit(NEW_USER,result.value,(success) => {
 					if(success){
+						this.setState({username:result.value[0]});
 						MySwal.fire({
 							type: 'success',
 							title: 'User has been Registered!!',
@@ -83,13 +84,12 @@ class ChatApp extends Component {
 
 	componentDidMount() {
 		this.registerUser();
-		this.socket.on(SEND_MESSAGE,(data,username) => {
+		this.socket.on(SEND_MESSAGE,(data) => {
 			console.log("New Message...");
 			if(this.socket.id!==data.id){
 				var newMessage = {
 					cls:"sent",
-					val:data.val,
-					user: username
+					val:data.val
 				};
 				this.setState({msgs:[...this.state.msgs,newMessage]});
 			}
