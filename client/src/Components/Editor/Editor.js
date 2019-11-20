@@ -1,96 +1,125 @@
 import React, { Component } from 'react';
-import { Controlled as CodeMirror } from 'react-codemirror2';
-import Pusher from 'pusher-js';
-import pushid from 'pushid';
-import axios from 'axios'
+import { Controlled as Codemirror } from 'react-codemirror2';
 
 import './Editor.css';
 
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 
+import 'codemirror/mode/markdown/markdown';
 import 'codemirror/mode/htmlmixed/htmlmixed';
-import 'codemirror/mode/css/css';
 import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/apl/apl';
+import 'codemirror/mode/asterisk/asterisk';
+import 'codemirror/mode/brainfuck/brainfuck';
+import 'codemirror/mode/clojure/clojure';
+import 'codemirror/mode/cobol/cobol';
+import 'codemirror/mode/coffeescript/coffeescript';
+import 'codemirror/mode/commonlisp/commonlisp';
+import 'codemirror/mode/css/css';
+import 'codemirror/mode/d/d';
+import 'codemirror/mode/dart/dart';
+import 'codemirror/mode/fortran/fortran';
+import 'codemirror/mode/haskell/haskell';
+import 'codemirror/mode/groovy/groovy';
+import 'codemirror/mode/xml/xml';
+import 'codemirror/mode/swift/swift';
+import 'codemirror/mode/vhdl/vhdl';
+
+
+
+
+var defaults = {
+  markdown: '',
+  javascript: '',
+  htmlmixed: '',
+  apl: '',
+  asterisk: '',
+  brainfuck: '',
+  clojure: '',
+  cobol: '',
+  coffeescript: '',
+  commonlisp: '',
+  css: '',
+  d: '',
+  dart: '',
+  fortran: '',
+  haskell: '',
+  groovy: '',
+  xml: '',
+  swift: '',
+  vhdl: ''
+};
 
 export default class Editor extends Component {
-    constructor() {
+  
+  constructor() {
         super();
         this.state = {
-          id: '',
-          html: '',
+          code: defaults.markdown,
+          readOnly: false,
+          mode: 'markdown',
         };
       }
 
-      componentDidUpdate() {
-        this.runCode();
-      }
+  changeMode = (e) => {
+    e.preventDefault();
+    var mode = e.target.value;
+    this.setState({
+      mode: mode,
+      code: defaults[mode]+this.state.code
+    });
+  }
 
-      componentDidMount() {
-        this.setState({
-          id: pushid(),
-        });
-      }
+  toggleReadOnly = (e) => {
+    this.setState({
+      readOnly: !this.state.readOnly
+    }, () => this.refs.editor.focus());
+  }
 
-      runCode = () => {
-        /*const { html, js } = this.state;
-
-        const iframe = this.refs.iframe;
-        const document = iframe.contentDocument;
-        const documentContents = `
-          <!DOCTYPE html>
-          <html lang="en">
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <meta http-equiv="X-UA-Compatible" content="ie=edge">
-            <title>Document</title>
-          </head>
-          <body>
-            ${html}
-            <script type="text/javascript">
-              ${js}
-            </script>
-          </body>
-          </html>
-        `;
-        document.open();
-        document.write(documentContents);
-        document.close();*/
-      };
-
-      render() {
-        const { html } = this.state;
-        const codeMirrorOptions = {
-          theme: 'material',
-          lineNumbers: true,
-          scrollbarStyle: null,
-          lineWrapping: true,
-        };
-
-        return (
-          <div className="App">
-            <section className="playground">
-              <div className="code-editor html-code">
-                <div className="editor-header">HTML</div>
-                <CodeMirror
-                  value={html}
-                  options={{
-                    mode: 'htmlmixed',
-                    ...codeMirrorOptions,
-                  }}
-                  onBeforeChange={(editor, data, html) => {
-                    this.setState({ html });
+  render () {
+    var options = {
+      lineNumbers: true,
+      readOnly: this.state.readOnly,
+      mode: this.state.mode
+    };
+    return (
+      <div>
+        
+        <Codemirror
+                  value={this.state.code}
+                  options = {{mode: this.state.mode}}
+                  onBeforeChange={(editor, data, code) => {
+                    this.setState({ code  : code + data.text[0] });
                   }}
                 />
-              </div>
-            </section>
-            /*{
-            <section className="result">
-              <iframe title="result" className="iframe" ref="iframe" />
-            </section>
-        }*/
-          </div>
-        );
-      }
-    }
+        
+        <div style={{ marginTop: 10 }}>
+          <select onChange={this.changeMode} value={this.state.mode}>
+            <option value="markdown">Markdown</option>
+            <option value="javascript">JavaScript</option>
+            <option value="htmlmixed">htmlmixed</option>
+            <option value="apl">apl</option>
+            <option value="asterisk">asterisk</option>
+            <option value="brainfuck">brainfuck</option>
+            <option value="clojure">clojure</option>
+            <option value="coffeescript">coffeescript</option>
+            <option value="commonlisp">commonlisp</option>
+            <option value="css">css</option>
+            <option value="d">d</option>
+            <option value="dart">dart</option>
+            <option value="fortran">fortran</option>
+            <option value="haskell">haskell</option>
+            <option value="groovy">groovy</option>
+            <option value="xml">xml</option>
+            <option value="swift">swift</option>
+            <option value="vhdl">vhdl</option>
+          </select>
+          <button onClick={this.toggleReadOnly}>Toggle read-only mode (currently {this.state.readOnly ? 'on' : 'off'})</button>
+        </div>
+      </div>
+    );
+  }
+};
+
+  

@@ -1,11 +1,10 @@
 body {
-    display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     background-color: grey; 
     font-family: "proxima-nova", "Source Sans Pro", sans-serif;
-    font-size: 1em;
+    font-size: 19px;
     letter-spacing: 0.1px;
     color: #32465a;
     text-rendering: optimizeLegibility;
@@ -16,10 +15,8 @@ body {
   #frame {
     width: 100vw;
     min-width: 360px;
-    max-width: 1365px;
     height: 100vh;
     min-height: 300px;
-    max-height: 720px;
     background: #E6EAEA;
   }
   @media screen and (max-width: 1000px) {
