@@ -26,9 +26,8 @@ import 'codemirror/mode/groovy/groovy';
 import 'codemirror/mode/xml/xml';
 import 'codemirror/mode/swift/swift';
 import 'codemirror/mode/vhdl/vhdl';
-
-
-
+import io from 'socket.io-client';
+import {NEW_CODE} from '../chatservice/events';
 
 var defaults = {
 	markdown: '',
@@ -57,6 +56,8 @@ let fr;
 
 export default class Editor extends Component {
 
+    socket = io('http://localhost:4000');
+
 	constructor() {
 				super();
 				this.state = {
@@ -64,6 +65,12 @@ export default class Editor extends Component {
 					readOnly: false,
 					mode: 'markdown'		
 				};
+				var mcode = localStorage.getItem('code')
+				if(mcode)
+				{
+					this.state.code = mcode;
+					localStorage.removeItem('code');
+				}
 			}
 
 	handleFileRead = (e) => {
@@ -99,8 +106,16 @@ export default class Editor extends Component {
 
 	sendMessage = (e) => {
 		e.preventDefault();
-		this.props.sm(this.state.code);
+		var data = {
+			cls:"replies",
+			val:this.state.code,
+			id: this.props.match.params.id
+		};
+		this.socket.emit(NEW_CODE,data);
+		window.close();
 	}
+
+
 
 	render () {
 		var options = {

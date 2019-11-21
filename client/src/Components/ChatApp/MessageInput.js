@@ -11,7 +11,7 @@ class MessageInput extends Component {
 
     onClickHandler = (e) => {
         e.preventDefault();
-        window.open('/editor');
+        window.open('/editor/'+this.props.sid);
     }
 
     changeHandler = (e) => {
@@ -23,6 +23,7 @@ class MessageInput extends Component {
         this.props.submit(this.state.msg);
         this.setState({msg:""});
     }
+
 
     render() {
         return (

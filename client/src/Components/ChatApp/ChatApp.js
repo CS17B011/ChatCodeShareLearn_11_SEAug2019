@@ -9,24 +9,33 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 class ChatApp extends Component {
+
 	socket = io('http://localhost:4000');
+	
 	constructor(props){
 		super(props);
 		this.state = {
 			username: "",
 			msgs: [],
-			contacts: []
+			contacts: [],
+			codeTh: []
 		};
+	}
+
+	addTh = (code) => {
+		var data = {
+			title: code
+		}
+		this.setState({codeTh:this.state.codeTh.concat(data)});
 	}
 
 	addMsg = (val) => {
 		if(val)
 		{
 			console.log(this.socket);
-			var msg = this.state.username + ' : ' + val;
 			var data = {
 				cls:"replies",
-				val:msg,
+				val:val,
 				id: this.socket.id
 			};
 			this.setState({msgs: [...this.state.msgs,data]});
@@ -96,12 +105,20 @@ class ChatApp extends Component {
 		});
 		this.socket.on(SEND_CODE,(data) => {
 			console.log(data);
-			if(this.props.codeID!==data.id){
+			if(this.state.username!==data.id){
+				var newMessage = {
+					cls:"sent",
+					val:data.val
+				};
+				this.setState({msgs:[...this.state.msgs,newMessage]});
+			}
+			else
+			{
 				var newMessage = {
 					cls:"replies",
 					val:data.val
 				};
-				this.setState({msgs:[...this.state.msgs,newMessage]});
+				this.setState({msgs:[...this.state.msgs,newMessage]});	
 			}
 		});
 		this.socket.on(UPDATE_USERS,users => {
@@ -124,8 +141,8 @@ class ChatApp extends Component {
 			                <i className="fa fa-google" aria-hidden="true" />
 		              	</div>
 		            </div>
-                    <Messages msgs={this.state.msgs}/>
-                    <MessageInput submit={this.addMsg}/>
+                    <Messages msgs={this.state.msgs} addTh = {this.addTh} codeTh = {this.state.codeTh} sid={this.state.username}/>
+                    <MessageInput submit={this.addMsg} sid={this.state.username}/>
     	        </div>
 	        </div>
         );
